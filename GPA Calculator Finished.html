@@ -1,0 +1,207 @@
+<!---------------------
+Jamal D. Scott
+GPA Calculator
+Assignment 3
+Dr. Leap
+CS310A
+---------------------->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GPA Calculator</title>
+		<style type="text/css">
+		body 
+		{
+			background-color: #202020;
+			text-align:center;
+		}
+
+		table 
+		{
+			border-collapse: collapse;
+			display: inline-block;
+		}
+
+		td 
+		{
+			background-color: lightgray;
+			color:black;
+			border: solid 1px ;
+			padding: 5px;
+			vertical-align: center;
+			text-align: center;
+		}
+
+		div.header 
+		{
+			height: 60px;
+			text-align: center;
+			color: white;
+			display: block;
+			border: none;
+			background-color: tan;
+		}
+
+		h2 
+		{
+			position: relative;
+			top: 10px;
+			display: inline;
+			font-align: center;
+			font-size: 30px;
+		}
+
+		section 
+		{
+			position: relative;
+			text-align: center;
+			vertical-align: center;
+			color: white;
+			display: block;
+			background-color: black;
+			border-collapse: collapse;
+		}
+
+		div.tableposition 
+		{
+			text-align: center;
+			width: 85%;
+			padding: 50px;
+		}
+		
+		td 
+		{
+			text-align: center;
+		}
+		input.mark 
+		{
+			border: 1px gray solid;
+		}
+		</style>
+		
+		<script type="text/javascript">
+			function convertGrade(grade_string) 
+			{
+				var grade;
+				switch (grade_string.toUpperCase()) 
+				{
+					case "A": return 4.0;
+					case "A-": return 3.7;		
+					case "B+": return 3.3;	
+					case "B": return 3.0;
+					case "B-": return 2.7;
+					case "C+": return 2.3;
+					case "C": return 2.0;
+					case "C-": return 1.7;
+					case "D+": return 1.3;
+					case "D": return 1.0;
+					case "D-": return 0.7;	
+					case "F": return 0.0;
+					case "P":
+					case "NP":
+						return -1;
+				}
+				return grade;
+			}
+					
+			function computeGPA() 
+			{
+				var finalGPA, qualityPoints, totalQualityPoints=0, totalCredits=0;
+				var gradeEntry, creditEntry;
+						
+				for(var i = 1; i <=6; ++i)
+				{
+				
+					document.getElementById("grade" + i).style.border = "";
+					document.getElementById("credit" + i).style.border = "";
+				
+					if(document.getElementById("grade"+i).value !== "" && document.getElementById("grade"+i).value !== "P" && document.getElementById("grade"+i).value !==  "NP")
+					{
+						gradeEntry = convertGrade(document.getElementById("grade"+i).value);
+						creditEntry = parseFloat(document.getElementById("credit"+i).value);
+								
+						if(isNaN(gradeEntry)) 
+						{
+							document.getElementById("grade"+i).style.border="solid red";
+							alert("Invalid grade entry. Please fix it first");
+							return;
+						}
+						else if (isNaN(creditEntry))	
+						{
+							alert("Invalid credit entry: '"+document.getElementById("credit"+i).value+"' Please enter a numeric value.");
+						}
+						else if(gradeEntry >= 0)
+						{
+							qualityPoints = gradeEntry * creditEntry;
+							totalQualityPoints += qualityPoints;
+							totalCredits += creditEntry;
+						}
+					}
+				}
+						
+				finalGPA = totalQualityPoints/totalCredits;
+				document.getElementById("GPA").value = finalGPA;
+				document.getElementById("GPA").style.visibility = "visible";
+			}
+		</script>
+	</head>
+	
+	<body>
+		<center>
+				<div class = "header"><h2>GPA Calculator</br></h2></div>
+				<div>
+				<section>
+				<div class = "tableposition">
+				<form name="calculator" action="">
+					<table>
+						<tr>
+							<th>Class</th><th>Grade</th><th>Credits</th>
+						</tr>
+						<tr>
+							<td>Class 1</td>
+							<td><input type="text" class="mark" id="grade1" size="3" /></td>
+							<td><input type="text" id="credit1" size="3" /></td>
+						</tr>
+						<tr>
+							<td>Class 2</td>
+							<td><input type="text" id="grade2" size="3" /></td>
+							<td><input type="text" id="credit2" size="3" /></td>
+						</tr>
+						<tr>
+							<td>Class 3</td>
+							<td><input type="text" id="grade3" size="3" /></td>
+							<td><input type="text" id="credit3" size="3" /></td>
+						</tr>
+						<tr>
+							<td>Class 4</td>
+							<td><input type="text" id="grade4" size="3" /></td>
+							<td><input type="text" id="credit4" size="3" /></td>
+						</tr>
+						<tr>
+							<td>Class 5</td>
+							<td><input type="text" id="grade5" size="3" /></td>
+							<td><input type="text" id="credit5" size="3" /></td>
+						</tr>
+						<tr>
+							<td>Class 6</td>
+							<td><input type="text" id="grade6" size="3" /></td>
+							<td><input type="text" id="credit6" size="3" /></td>
+						</tr>
+						<tr>
+							<td colspan="3"> Calculated GPA:
+							<input class="hide" type="text" id="GPA" size="5" />
+							<br />
+							<br />
+							<input type="button" value="Calculate" onclick="computeGPA();"/>
+							<br/>
+							</td>
+						</tr>
+						</table>
+					</form>
+			</div>
+			</section>
+			</div>
+		</center>
+	</body>
+</html>
